@@ -35,3 +35,11 @@ export const bookRepository = {
     return true;
   },
 };
+
+export const resetBooks = () => {
+  books = [
+    { id: 1, title: 'To Kill a Mockingbird', author: 'Harper Lee', genre: 'Fiction', price: 50 },
+    { id: 2, title: '1984', author: 'George Orwell', genre: 'Fiction', price: 75 },
+  ];
+  nextId = 3;
+};

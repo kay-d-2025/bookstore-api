@@ -1,6 +1,8 @@
 import { bookService } from '../src/services/book.service';
+import { resetBooks } from '../src/repositories/book.repository';
 
 describe('bookService.getDiscountedPrice', () => {
+  beforeEach(() => resetBooks());
   it('calculates correct discounted price for Fiction genre', () => {
     const result = bookService.getDiscountedPrice('Fiction', 10);
     expect(result.genre).toBe('Fiction');
@@ -35,6 +37,7 @@ describe('bookService.getDiscountedPrice', () => {
 });
 
 describe('bookService CRUD', () => {
+  beforeEach(() => resetBooks());
   it('creates a new book', () => {
     const book = bookService.createBook({ title: 'Dune', author: 'Frank Herbert', genre: 'Sci-Fi', price: 40 });
     expect(book.id).toBeDefined();

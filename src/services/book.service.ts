@@ -5,6 +5,7 @@ export const bookService = {
   getAllBooks: (): Book[] => bookRepository.findAll(),
 
   getBookById: (id: number): Book => {
+    if (isNaN(id)) throw { status: 400, message: 'id must be a number' };
     const book = bookRepository.findById(id);
     if (!book) throw { status: 404, message: `Book with id ${id} not found` };
     return book;
@@ -19,6 +20,7 @@ export const bookService = {
   },
 
   updateBook: (id: number, data: Partial<Omit<Book, 'id'>>): Book => {
+    if (isNaN(id)) throw { status: 400, message: 'id must be a number' };
     if (data.price !== undefined && data.price < 0)
       throw { status: 400, message: 'price must be a positive number' };
     const book = bookRepository.update(id, data);
@@ -27,11 +29,13 @@ export const bookService = {
   },
 
   deleteBook: (id: number): void => {
+    if (isNaN(id)) throw { status: 400, message: 'id must be a number' };
     const deleted = bookRepository.delete(id);
     if (!deleted) throw { status: 404, message: `Book with id ${id} not found` };
   },
 
   getDiscountedPrice: (genre: string, discount: number) => {
+    if (isNaN(discount)) throw { status: 400, message: 'discount must be a number' };
     if (discount < 0 || discount > 100)
       throw { status: 400, message: 'discount must be between 0 and 100' };
     const books = bookRepository.findByGenre(genre);
